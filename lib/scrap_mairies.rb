@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 require 'google_drive'
+require 'csv'
 # require 'pry' #binding.pry 
 
 class MailMairie
@@ -96,6 +97,19 @@ class MailMairie
     end
     ws.save
     puts "Ok tu peux retrouver la liste ici : https://docs.google.com/spreadsheets/d/1xUNL5Q_CTIVcEdxhubjTpfuGN3uU6LUygPR2uTkjpFU/edit?usp=sharing"
+  end
+
+  def save_as_CSV
+    line = 1
+    CSV.open("db/mails.csv", "w") do |csv|
+    @mairie_hash.each do |i|
+      i.each do |k , v| 
+        csv << [line, k, v]
+        line += 1
+        end
+      end
+    end
+    puts "Ok c'est enregistré dans 'db/mails.csv'"
   end
 
 
